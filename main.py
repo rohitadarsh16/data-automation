@@ -15,6 +15,40 @@ client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsAllowInvalidCe
 db = client.rezonanz
 
 
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.application import MIMEApplication
+
+
+def sendmail(recipient_email, update, collectionName, erorUpdate):
+
+    sender_email = 'deepakpythonwork@gmail.com'
+    sender_password = 'uzed ghqu tkxz mjxf '
+    email_template_path = "index.html"
+    with open(email_template_path, "r") as template_file:
+        email_template = template_file.read()
+    email_template = email_template.replace("{row number}", str(update))
+    email_template = email_template.replace("{notebook}", str(collectionName))
+    email_template = email_template.replace("{bug}", str(erorUpdate))
+    subject = 'Update ' + ' ' + str(erorUpdate)  
+
+
+    message = MIMEMultipart()
+    message['From'] = sender_email
+    message['To'] = recipient_email
+    message['Subject'] = subject
+
+    message.attach(MIMEText(email_template, 'html'))
+    # with open(attachment_path, "rb") as attachment_file:
+    #     attachment = MIMEApplication(attachment_file.read(), _subtype="xlsx")
+    #     attachment.add_header('Content-Disposition', 'attachment', filename=attachment_path)
+    #     message.attach(attachment)
+
+    with smtplib.SMTP('smtp.gmail.com', 587) as server:
+        server.starttls()  
+        server.login(sender_email, sender_password)  
+        server.sendmail(sender_email, recipient_email, message.as_string()) 
 
 
 def getdata(start_date, end_date, rows, page, customerID):
@@ -219,9 +253,14 @@ while True:
                 rows = getTotalrow(start_date, end_date, 20, 1, data['customerID'])
                 print(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
                 logging.info(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
+            except Exception as e:
+                sendmail('rohit45deepak@gmail.com', rows, data['collectionName'], 'no data found')
+                logging.error(f"no data found")
+                continue
+            try:
                 ExtractData(data['collectionName'], data['customerID'], start_date, end_date, rows)
             except Exception as e:
-                print('no data found')
+                sendmail('rohit45deepak@gmail.com', rows, data['collectionName'], e)
                 logging.error(f"Error: {e}")
 
     sleep_until_next_day()
