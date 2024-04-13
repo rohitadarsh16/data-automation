@@ -1,0 +1,61 @@
+13-Apr-24 13:49:12 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:19 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/14?customerID=Mjg1OA%3D%3D%2F&fromDate=2023-01-01&toDate=2024-03-01&signMeeting=All&liveSiteYN=1&random=0.7307961892016783&locale=en&MeetingTypeList=&CountryList=&VotedList=&actionCode=101&sessionToken=1706393802765&_search=false&nd=1706393867935&rows=20&page=1&SortByColumn=CompanyName&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:19 - Total rows 11169 , 2023-01-01, 2024-03-01 Mjg1OA==/ Amundi_test
+13-Apr-24 13:49:19 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:28 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/14?customerID=Mjg1OA%3D%3D%2F&fromDate=2023-01-01&toDate=2024-03-01&signMeeting=All&liveSiteYN=1&random=0.7307961892016783&locale=en&MeetingTypeList=&CountryList=&VotedList=&actionCode=101&sessionToken=1706393802765&_search=false&nd=1706393867935&rows=11169&page=1&SortByColumn=CompanyName&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:34 - Total rows 11169
+13-Apr-24 13:49:34 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:35 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1788099&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:36 - processed  1 of 11169 rows
+13-Apr-24 13:49:36 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:38 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1710310&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:38 - processed  2 of 11169 rows
+13-Apr-24 13:49:38 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:40 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1754341&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:40 - processed  3 of 11169 rows
+13-Apr-24 13:49:40 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:41 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1779052&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:42 - processed  4 of 11169 rows
+13-Apr-24 13:49:42 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:43 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1710640&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:43 - processed  5 of 11169 rows
+13-Apr-24 13:49:43 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:44 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1745990&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:44 - processed  6 of 11169 rows
+13-Apr-24 13:49:44 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:45 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1715094&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:46 - processed  7 of 11169 rows
+13-Apr-24 13:49:46 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:47 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1747881&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:47 - processed  8 of 11169 rows
+13-Apr-24 13:49:47 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:48 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1706215&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:48 - processed  9 of 11169 rows
+13-Apr-24 13:49:48 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:51 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1786933&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:51 - processed  10 of 11169 rows
+13-Apr-24 13:49:51 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:54 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1813592&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:54 - processed  11 of 11169 rows
+13-Apr-24 13:49:54 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:55 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1739950&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:56 - processed  12 of 11169 rows
+13-Apr-24 13:49:56 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:57 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1762831&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:57 - processed  13 of 11169 rows
+13-Apr-24 13:49:57 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:49:58 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1732590&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:49:58 - processed  14 of 11169 rows
+13-Apr-24 13:49:58 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:50:01 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1765902&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:50:01 - processed  15 of 11169 rows
+13-Apr-24 13:50:01 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:50:03 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1811527&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 1764
+13-Apr-24 13:50:03 - processed  16 of 11169 rows
+13-Apr-24 13:50:03 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:50:05 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1795547&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:50:05 - processed  17 of 11169 rows
+13-Apr-24 13:50:05 - Starting new HTTPS connection (1): vds.issgovernance.com:443
+13-Apr-24 13:50:06 - https://vds.issgovernance.com:443 "GET /vds/api/getVdsData/7?customerID=Mjg1OA%3D%3D%2F&fromDate=&toDate=&fundValue=35151&liveSiteYN=1&signMeeting=All&signVote=All&meetingID=1820114&random=0.9265552175773822&locale=en&actionCode=114&sessionToken=1706393802765&_search=false&nd=1706394317474&rows=2000&page=1&SortByColumn=BallotItemNumber&OrderBy=asc HTTP/1.1" 200 None
+13-Apr-24 13:50:07 - processed  18 of 11169 rows
+13-Apr-24 13:50:07 - Starting new HTTPS connection (1): vds.issgovernance.com:443

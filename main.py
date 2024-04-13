@@ -2,10 +2,10 @@ import requests, json, os
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
-import logging
 
-# Configure the logging module
-logging.basicConfig(filename='app.log', filemode='w', format='%(name)s - %(levelname)s - %(message)s')
+import logging
+logging.basicConfig(filename='dataprocess.log', level=logging.DEBUG, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
+
 
 
 import datetime
