@@ -205,7 +205,7 @@ end_date = '2024-03-01'
 
 
 dashboarddata = [
-    {"customerID": "Mjg1OA==/", "collectionName": "Amundi_test"},
+    # {"customerID": "Mjg1OA==/", "collectionName": "Amundi_test"},
     {"customerID": "MjIwNw==", "collectionName": "HSBC_test"},
     {"customerID": "MjU2NQ==/", "collectionName": "lgim_test"},
     {"customerID": "MTA4MjY3MDQ=", "collectionName": "Federated_Hermes_test"},

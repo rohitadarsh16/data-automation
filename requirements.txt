@@ -1,2 +1,2 @@
 requests
-pymongo[srv]ps aux | grep main.py
+pymongo[srv]
