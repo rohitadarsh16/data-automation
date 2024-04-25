@@ -2,6 +2,7 @@ import requests, json, os
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
+import pandas as pd
 import logging
 logging.basicConfig(filename='dataprocess.log', level=logging.DEBUG, format='%(asctime)s - %(message)s', datefmt='%d-%b-%y %H:%M:%S')
 
@@ -136,13 +137,27 @@ def getTotalrow(start_date, end_date, rows, page, customerID):
      return TRow
 
 
+
+from datetime import datetime
+
+def convert_string_to_datetime(date_string):
+    if date_string:
+        return datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S.%f")
+    else:
+        return None
+    
+   
 def ExtractData(collectionName, customerID, start_date, end_date, rows):
     start_row = 0
+    datalist = []
     data = getdata(start_date, end_date, rows, 1, customerID)
     print(f"Total rows {rows}")
     logging.info(f"Total rows {rows}")
     for i in range(start_row, len(data)):
         dDict = {"Company": data[i]['CompanyName'], "Ticker": data[i]['Ticker'], "Country": data[i]['Country'], "SecurityID": data[i]['SecurityID'], "MeetingDate": data[i]['MeetingDate'], "meetingType": data[i]['MeetingType'], "MultipleFundIDs": data[i]['MultipleFundIDs'], "MeetingID": data[i]['MeetingID'] }
+        
+        
+        
         fundIDs = [] 
         if "," in dDict['MultipleFundIDs']:
             fundIDs = dDict['MultipleFundIDs'].split(',')
@@ -151,86 +166,71 @@ def ExtractData(collectionName, customerID, start_date, end_date, rows):
 
         for fundID in fundIDs:
             dataDict = {"Company": data[i]['CompanyName'], "Ticker": data[i]['Ticker'], "Country": data[i]['Country'], "SecurityID": data[i]['SecurityID'], "MeetingDate": data[i]['MeetingDate'], "meetingType": data[i]['MeetingType'], "MultipleFundIDs": data[i]['MultipleFundIDs'], "MeetingID": data[i]['MeetingID']}
+            AllData ={}
             companyData = getCompanydata(fundID, dataDict['MeetingID'], customerID)
+            
             tempdata = []
+            companyleveData = []
+            meetinglevelData = []
+            proposalLevelData = []
+            voteLevelFundData = []
             FundName = ''
             inudstryType = ''
             RecordDateDetail = ''
+            
             
             for j in companyData:
                 if '<' in j['Notes'] or 'br' in j['Notes']:
                     j['Notes'] = j['Notes'].replace('<br>', ' ')
                     j['Notes'] = j['Notes'].replace('NA', ' ')
-                FundName = j['FundNames']
-                inudstryType = j['SixDigitSectorType']
-                RecordDate =  j['RecordDateDetail']
-                filtterdata = {
-                    "FundFootnoteSymbol":j['FundFootnoteSymbol'],
-                    "MeetingTypeDetail": j['MeetingTypeDetail'],
-                    "CompanyID": j['CompanyID'],
-                    "ShareholderProposal": j['ShareholderProposal'],
-                    "FundFootnoteText": j['FundFootnoteText'],
-                    "SeqNumber": j['SeqNumber'],
-                    "MeetingFootnoteSymbol": j['MeetingFootnoteSymbol'],
-                    "securityID": j['SecurityIDDetail'],
-                    "EsgPillar": j['EsgPillar'],
-                    "MgmtRec": j['MgtRecVote'],
-                    "Notes":j['Notes'],
-                    "ProposalSubCategory": j['ProposalSubCategory'],
-                    "ProposalFootnoteText": j['ProposalFootnoteText'],
-                    "CountryDetail": j['CountryDetail'],
-                    "SignificantProposalYN": j['SignificantProposalYN'],
-                    "Vote": j['ClientVoteList'],
-                    "MeetingFootnoteText": j['MeetingFootnoteText'],
-                    "ProposalCategory": j['ProposalCategory'],
-                    "SharesVotedList": j['SharesVotedList'],
-                    "Item#": j['BallotItemNumber'],
-                    "VoteResult": j['VoteResult'],
-                    "ItemOnAgendaID": j['ItemOnAgendaID'],
-                    "ProposalFootnoteSymbol": j['ProposalFootnoteSymbol'],
-                    "Proposal": j['Proposal'],
-                    "ResearchNotes": j['ResearchNotes'],
-                    "ContextualNote": j['ContextualNote'], 
-                }
-                tempdata.append(filtterdata)
-            
-            dataDict['FundName'] = FundName
-            dataDict['RecordDate'] = RecordDate
-            dataDict['proposaldata'] = tempdata
-            dataDict['IndustrySector'] = inudstryType
-            dataDict['created_at'] = datetime.datetime.now()
-            dataDict['FundID'] = fundID
-            print((f"Inserting data for {dataDict['Company']} - {dataDict['MeetingDate']} - FundID  {dataDict['FundID']} FundName {dataDict['FundName']}"))
-            logging.info(f"Inserting data for {dataDict['Company']} - {dataDict['MeetingDate']} - FundID  {dataDict['FundID']} FundName {dataDict['FundName']}")
-            # if existing_doc:
-            #     print('Data already exists')
-            #     logging.info('Data already exists')
-            #     continue
-            
-            db[collectionName].insert_one(dataDict)
-            # print(f"Inserted data for {dataDict['Company']} - {dataDict['MeetingDate']}")
-            # logging.info(f"Inserted data for {dataDict['Company']} - {dataDict['MeetingDate']}")
+                
+                companyleveData = [{'CompanyID':j['CompanyID'], 'CompanyName':j['CompanyNameDetail'], 'TickerDetail':j['TickerDetail'], 'CountryDetail':j['CountryDetail']}]
+                
+                meetinglevelData = [{'MeetingTypeDetail': j['MeetingTypeDetail'], 'MeetingDate': convert_string_to_datetime(j['MeetingDateDetail']),  "MeetingFootnoteText": j['MeetingFootnoteText'], "RecordDateDetail":convert_string_to_datetime( j['RecordDateDetail'])}]
+               
+                proposalLevel = {"ShareholderProposal": j['ShareholderProposal'],"EsgPillar": j['EsgPillar'],"MgtRecVote": j['MgtRecVote'] ,"Proposal": j['Proposal'], "ProposalSubCategory": j['ProposalSubCategory'], "ProposalFootnoteText": j['ProposalFootnoteText'], "ProposalFootnoteSymbol": j['ProposalFootnoteSymbol'], "SignificantProposalYN": j['SignificantProposalYN'],"ProposalCategory": j['ProposalCategory'], "BallotItemNumber": j['BallotItemNumber'], "SeqNumber":j["SeqNumber"]}
+                proposalLevelData.append(proposalLevel)
+                votelevel = {"SecurityIDDetail": j["SecurityIDDetail"], "FundId" : fundID, "FundNames": j["FundNames"], "SharesVotedList": int(j['SharesVotedList']),"ClientVoteList" : j["ClientVoteList"] , "FundFootnoteSymbol":j['FundFootnoteSymbol'], "FundFootnoteText": j['FundFootnoteText'] ,  "Notes":j['Notes'], "ResearchNotes": j['ResearchNotes'], "ContextualNote": j['ContextualNote']}
+                voteLevelFundData.append(votelevel)
+            AllData['CompanyLevel'] = companyleveData
+            AllData['MeetingLevel'] = meetinglevelData
+            AllData['ProposalLevel'] = proposalLevelData
+            AllData['VoteLevelFundData'] = voteLevelFundData
+            AllData['created_at'] = datetime.now()
 
+            db[collectionName].insert_one(AllData)
+          
         print(f"processed  {i + 1} of {rows} rows" )
         logging.info(f"processed  {i + 1} of {rows} rows" )
 
-   
 
 start_date = '2023-01-01'
-end_date = '2024-03-01'
+end_date = '2023-13-31'
 
 
 dashboarddata = [
-    {"customerID": "Mjg1OA==/", "collectionName": "Amundi_test_t"},
-    {"customerID": "MjIwNw==", "collectionName": "HSBC_test_t"},
-    {"customerID": "MTAxODE=", "collectionName": "swiss_test"},
-    {"customerID": "MjU2NQ==/", "collectionName": "lgim_test"},
-    {"customerID": "MTA4MjY3MDQ=", "collectionName": "Federated_Hermes_test"},
-    {"customerID": "MTcyOQ==/", "collectionName": "Praxis_Mutual_Funds_test"},
-    {"customerID": "MTY0MQ==/", "collectionName": "Calvert_test"},
-    {"customerID": "Mzk3MA==/", "collectionName": "Invesco_test"},
-    {"customerID": "MzM3MQ==", "collectionName": "Trillium_Asset_Management_test"},
-    {"customerID": "NDU4NQ==/", "collectionName": "DWS_test"},
+    {"customerID": "NDI0NQ==/", "collectionName": "swisscanto_test"},
+    {"customerID": "MTEyODk=", "collectionName": "Ostrum_test"},
+    {"customerID": "MjI1Ng==", "collectionName": "Pyrford_test"},
+    {"customerID": "MTcy", "collectionName": "Genesis_test"},
+    {"customerID": "ODg3MDA=", "collectionName": "BT_AUS_test"},
+    {"customerID": "ODI4OQ==", "collectionName": "Carmignac_Voting_Disclosure_test"},
+    {"customerID": "OTQ0Ng==", "collectionName": "gqg_partners_test"},
+    {"customerID": "ODkyNA==", "collectionName": "Milford_test"},
+    {"customerID": "ODA1MA==", "collectionName": "Mirabaud_test"},
+    {"customerID": "OTAyNg==", "collectionName": "mirova_test"},
+    {"customerID": "MjMyMA==", "collectionName": "comgest_test"},
+    {"customerID": "MzY2MDA=", "collectionName": "Paedagogernes_Pension_test"},
+    {"customerID": "ODg3OQ==", "collectionName": "Sycomore_test"},
+    {"customerID": "MTUyMA==", "collectionName": "Pzena Investment Management"},
+    {"customerID": "NzcyMA==", "collectionName": "Kempen"},
+    {"customerID": "ODI2NzA=", "collectionName": "PNO"},
+    {"customerID": "NzYxNA", "collectionName": "Unigestion"},
+    {"customerID": "NTg0", "collectionName": "Marathon Asset Management"},
+    {"customerID": "MzM3MQ==", "collectionName": "Trillium Asset Management"},
+    {"customerID": "MTMxMzk=", "collectionName": "T. Rowe Price Investment Management, Inc. (TRPIM)"},
+    {"customerID": "ODI2NzAy", "collectionName": "Industriens Pension"},
+    {"customerID": "MTI3NzI=", "collectionName": "Santander Asset Management"}
 ]
 
 def sleep_until_next_day():
