@@ -25,3 +25,17 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/dockerfile'
         tags: |
           $(tag)
+    - task: deploye
+      displayName: Deploy
+      uses: ssh-action@master
+      with:
+        host: ${User_HOST}
+        username: ${USERNAME }
+        key: ${PRIVATE_KEY }
+        script: |
+          docker stop dataprocess || true
+          docker rm dataprocess || true
+          git pull origin main
+          docker run -d --name dataprocess
+  
+
