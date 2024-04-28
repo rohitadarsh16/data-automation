@@ -147,7 +147,7 @@ def convert_string_to_datetime(date_string):
         return None
     
    
-def ExtractData(collectionName, customerID, start_date, end_date, rows):
+def ExtractData(collectionName, customerID,uid ,start_date, end_date, rows):
     start_row = 0
     datalist = []
     data = getdata(start_date, end_date, rows, 1, customerID)
@@ -159,6 +159,7 @@ def ExtractData(collectionName, customerID, start_date, end_date, rows):
         
         
         fundIDs = [] 
+        voteleveldata = []
         if "," in dDict['MultipleFundIDs']:
             fundIDs = dDict['MultipleFundIDs'].split(',')
         else:
@@ -173,64 +174,90 @@ def ExtractData(collectionName, customerID, start_date, end_date, rows):
             companyleveData = []
             meetinglevelData = []
             proposalLevelData = []
-            voteLevelFundData = []
+            voteList = []
+            FundFootnoteS = []
+            FundFootnoteT = []
+            Notes= []
+            ResearchNotes = []
+            ContextualNote = []
+            voteLevelFundData = {}
             FundName = ''
             inudstryType = ''
             RecordDateDetail = ''
-            
+             
             
             for j in companyData:
                 if '<' in j['Notes'] or 'br' in j['Notes']:
                     j['Notes'] = j['Notes'].replace('<br>', ' ')
                     j['Notes'] = j['Notes'].replace('NA', ' ')
-                
                 companyleveData = [{'CompanyID':j['CompanyID'], 'CompanyName':j['CompanyNameDetail'], 'TickerDetail':j['TickerDetail'], 'CountryDetail':j['CountryDetail']}]
                 
                 meetinglevelData = [{'MeetingTypeDetail': j['MeetingTypeDetail'], 'MeetingDate': convert_string_to_datetime(j['MeetingDateDetail']),  "MeetingFootnoteText": j['MeetingFootnoteText'], "RecordDateDetail":convert_string_to_datetime( j['RecordDateDetail'])}]
                
                 proposalLevel = {"ShareholderProposal": j['ShareholderProposal'],"EsgPillar": j['EsgPillar'],"MgtRecVote": j['MgtRecVote'] ,"Proposal": j['Proposal'], "ProposalSubCategory": j['ProposalSubCategory'], "ProposalFootnoteText": j['ProposalFootnoteText'], "ProposalFootnoteSymbol": j['ProposalFootnoteSymbol'], "SignificantProposalYN": j['SignificantProposalYN'],"ProposalCategory": j['ProposalCategory'], "BallotItemNumber": j['BallotItemNumber'], "SeqNumber":j["SeqNumber"]}
                 proposalLevelData.append(proposalLevel)
-                votelevel = {"SecurityIDDetail": j["SecurityIDDetail"], "FundId" : fundID, "FundNames": j["FundNames"], "SharesVotedList": int(j['SharesVotedList']),"ClientVoteList" : j["ClientVoteList"] , "FundFootnoteSymbol":j['FundFootnoteSymbol'], "FundFootnoteText": j['FundFootnoteText'] ,  "Notes":j['Notes'], "ResearchNotes": j['ResearchNotes'], "ContextualNote": j['ContextualNote']}
-                voteLevelFundData.append(votelevel)
+                # votelevel = {"SecurityIDDetail": j["SecurityIDDetail"], "FundId" : fundID, "FundNames": j["FundNames"], "SharesVotedList": int(j['SharesVotedList']),"ClientVoteList" : j["ClientVoteList"] , "FundFootnoteSymbol":j['FundFootnoteSymbol'], "FundFootnoteText": j['FundFootnoteText'] ,  "Notes":j['Notes'], "ResearchNotes": j['ResearchNotes'], "ContextualNote": j['ContextualNote']}
+                voteLevelFundData["SecurityIDDetail"] = j["SecurityIDDetail"]
+                voteLevelFundData["FundId"] = fundID
+                voteLevelFundData["FundNames"] = j["FundNames"]
+                voteLevelFundData["SharesVotedList"] = j['SharesVotedList']
+
+                voteList.append(j["ClientVoteList"])
+                FundFootnoteS.append(j['FundFootnoteSymbol'])
+                FundFootnoteT.append( j['FundFootnoteText'])
+                Notes.append( j['Notes'])
+                ResearchNotes.append(j['ResearchNotes'])
+                ContextualNote.append(j['ContextualNote'])
+                # voteLevelFundData.append(votelevel)
+            voteLevelFundData['voteList'] = voteList
+            voteLevelFundData['FundFootnoteS'] = FundFootnoteS
+            voteLevelFundData['FundFootnoteT'] = FundFootnoteT
+            voteLevelFundData['Notes'] = Notes
+            voteLevelFundData['ResearchNotes'] = ResearchNotes
+            voteleveldata.append(voteLevelFundData)
+
             AllData['CompanyLevel'] = companyleveData
             AllData['MeetingLevel'] = meetinglevelData
             AllData['ProposalLevel'] = proposalLevelData
-            AllData['VoteLevelFundData'] = voteLevelFundData
-            AllData['created_at'] = datetime.now()
+        AllData['uid'] = uid
+        AllData['VoteLevelFundData'] = voteleveldata
+        AllData['created_at'] = datetime.now()
 
-            db[collectionName].insert_one(AllData)
+        db[collectionName].insert_one(AllData)
           
         print(f"processed  {i + 1} of {rows} rows" )
         logging.info(f"processed  {i + 1} of {rows} rows" )
 
 
-start_date = '2023-01-01'
-end_date = '2023-13-31'
+start_date = '2024-01-01'
+end_date = '2024-04-27'
 
 
 dashboarddata = [
-    {"customerID": "NDI0NQ==/", "collectionName": "swisscanto_test"},
-    {"customerID": "MTEyODk=", "collectionName": "Ostrum_test"},
-    {"customerID": "MjI1Ng==", "collectionName": "Pyrford_test"},
-    {"customerID": "MTcy", "collectionName": "Genesis_test"},
-    {"customerID": "ODg3MDA=", "collectionName": "BT_AUS_test"},
-    {"customerID": "ODI4OQ==", "collectionName": "Carmignac_Voting_Disclosure_test"},
-    {"customerID": "OTQ0Ng==", "collectionName": "gqg_partners_test"},
-    {"customerID": "ODkyNA==", "collectionName": "Milford_test"},
-    {"customerID": "ODA1MA==", "collectionName": "Mirabaud_test"},
-    {"customerID": "OTAyNg==", "collectionName": "mirova_test"},
-    {"customerID": "MjMyMA==", "collectionName": "comgest_test"},
-    {"customerID": "MzY2MDA=", "collectionName": "Paedagogernes_Pension_test"},
-    {"customerID": "ODg3OQ==", "collectionName": "Sycomore_test"},
-    {"customerID": "MTUyMA==", "collectionName": "Pzena Investment Management"},
-    {"customerID": "NzcyMA==", "collectionName": "Kempen"},
-    {"customerID": "ODI2NzA=", "collectionName": "PNO"},
-    {"customerID": "NzYxNA", "collectionName": "Unigestion"},
-    {"customerID": "NTg0", "collectionName": "Marathon Asset Management"},
-    {"customerID": "MzM3MQ==", "collectionName": "Trillium Asset Management"},
-    {"customerID": "MTMxMzk=", "collectionName": "T. Rowe Price Investment Management, Inc. (TRPIM)"},
-    {"customerID": "ODI2NzAy", "collectionName": "Industriens Pension"},
-    {"customerID": "MTI3NzI=", "collectionName": "Santander Asset Management"}
+    {"customerID": "NDI0NQ==/", "collectionName": "swisscanto_test", 'investor_uuid': '53b90b50-8c66-11ee-b12d-b3d0f7682273'} ,
+    {"customerID": "MTE0MjA=/", "collectionName": "creditsuisse_test", 'inverstor_uuid': '219fdeb0-d021-11ee-a1e4-2441dc8a2002'},
+    {"customerID": "MTAxODE=/", "collectionName": "swislife_test", 'inverstor_uuid': '219fa026-d021-11ee-a1e4-2441dc8a2002'},
+    # {"customerID": "MTEyODk=", "collectionName": "Ostrum_test"},
+    # {"customerID": "MjI1Ng==", "collectionName": "Pyrford_test"},
+    # {"customerID": "MTcy", "collectionName": "Genesis_test"},
+    # {"customerID": "ODg3MDA=", "collectionName": "BT_AUS_test"},
+    # {"customerID": "ODI4OQ==", "collectionName": "Carmignac_Voting_Disclosure_test"},
+    # {"customerID": "OTQ0Ng==", "collectionName": "gqg_partners_test"},
+    # {"customerID": "ODkyNA==", "collectionName": "Mi_test"},
+    # {"customerID": "ODA1MA==", "collectionName": "Mirabaud_test"},
+    # {"customerID": "OTAyNg==", "collectionName": "mirova_test"},
+    # {"customerID": "MjMyMA==", "collectionName": "comgest_test"},
+    # {"customerID": "MzY2MDA=", "collectionName": "Paedagogernes_Pension_test"},
+    # {"customerID": "ODg3OQ==", "collectionName": "Sycomore_test"},
+    # {"customerID": "MTUyMA==", "collectionName": "Pzena Investment Management"},
+    # {"customerID": "NzcyMA==", "collectionName": "Kempen"},
+    # {"customerID": "ODI2NzA=", "collectionName": "PNO"},
+    # {"customerID": "NzYxNA", "collectionName": "Unigestion"},
+    # {"customerID": "NTg0", "collectionName": "Marathon Asset Management"},
+    # {"customerID": "MzM3MQ==", "collectionName": "Trillium Asset Management"},
+    # {"customerID": "MTMxMzk=", "collectionName": "T. Rowe Price Investment Management, Inc. (TRPIM)"},
+    # {"customerID": "ODI2NzAy", "collectionName": "Industriens Pension"},
+    # {"customerID": "MTI3NzI=", "collectionName": "Santander Asset Management"}
 ]
 
 def sleep_until_next_day():
@@ -257,7 +284,7 @@ while True:
             rows = getTotalrow(start_date, end_date, 20, 1, data['customerID'])
             print(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
             logging.info(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
-            ExtractData(data['collectionName'], data['customerID'], start_date, end_date, rows)
+            ExtractData(data['collectionName'], data['customerID'], data['investor_uuid'],start_date, end_date, rows)
             
         index += 1
     else:
