@@ -234,9 +234,9 @@ end_date = '2024-04-27'
 
 
 dashboarddata = [
-    {"customerID": "NDI0NQ==/", "collectionName": "swisscanto_test", 'investor_uuid': '53b90b50-8c66-11ee-b12d-b3d0f7682273'} ,
     {"customerID": "MTE0MjA=/", "collectionName": "creditsuisse_test", 'inverstor_uuid': '219fdeb0-d021-11ee-a1e4-2441dc8a2002'},
     {"customerID": "MTAxODE=/", "collectionName": "swislife_test", 'inverstor_uuid': '219fa026-d021-11ee-a1e4-2441dc8a2002'},
+    {"customerID": "NDI0NQ==/", "collectionName": "swisscanto_test", 'investor_uuid': '53b90b50-8c66-11ee-b12d-b3d0f7682273'} ,
     # {"customerID": "MTEyODk=", "collectionName": "Ostrum_test"},
     # {"customerID": "MjI1Ng==", "collectionName": "Pyrford_test"},
     # {"customerID": "MTcy", "collectionName": "Genesis_test"},
