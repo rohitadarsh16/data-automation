@@ -8,7 +8,7 @@ logging.basicConfig(filename='dataprocess.log', level=logging.DEBUG, format='%(a
 
 
 
-import datetime
+import time
 
 uri = "mongodb+srv://deepak:ZeXtafvF7jfYFabr@cluster0.twcbhex.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 client = MongoClient(uri, server_api=ServerApi('1'), tls=True, tlsAllowInvalidCertificates=True)
@@ -133,12 +133,12 @@ def getCompanydata(MultipleFundIDs, MeetingId, customerID):
 
     return response.json()['data']
 def getTotalrow(start_date, end_date, rows, page, customerID):
-     TRow= getdata(start_date, end_date, rows, page, customerID)[0]['TotalRows']
-     return TRow
+    TRow= getdata(start_date, end_date, rows, page, customerID)[0]['TotalRows']
+    return TRow
 
 
 
-from datetime import datetime
+from datetime import datetime,timedelta
 
 def convert_string_to_datetime(date_string):
     if date_string:
@@ -149,7 +149,6 @@ def convert_string_to_datetime(date_string):
    
 def ExtractData(collectionName, customerID,uid ,start_date, end_date, rows):
     start_row = 0
-    datalist = []
     data = getdata(start_date, end_date, rows, 1, customerID)
     print(f"Total rows {rows}")
     logging.info(f"Total rows {rows}")
@@ -229,8 +228,8 @@ def ExtractData(collectionName, customerID,uid ,start_date, end_date, rows):
         logging.info(f"processed  {i + 1} of {rows} rows" )
 
 
-start_date = '2024-01-01'
-end_date = '2024-04-27'
+start_date = '2024-04-27'
+end_date = '2024-04-30'
 
 
 dashboarddata = [
@@ -262,7 +261,7 @@ dashboarddata = [
 
 def sleep_until_next_day():
     # Get current date and time
-    now = datetime.datetime.now()
+    now = datetime.now()
 
     # Calculate the time until the next day
     next_day = now + timedelta(days=1)
@@ -280,33 +279,38 @@ index = 0
 while True:
     if index == 0:
         for data in dashboarddata:
-            
-            rows = getTotalrow(start_date, end_date, 20, 1, data['customerID'])
-            print(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
-            logging.info(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
-            ExtractData(data['collectionName'], data['customerID'], data['investor_uuid'],start_date, end_date, rows)
-            
-        index += 1
-    else:
-        start_date = str(end_date)
-        end_date = datetime.datetime.now().strftime('%Y-%m-%d') 
-        print('date next date', end_date, start_date)
-        logging.info(f"date next date {end_date} {start_date}")
-        for data in dashboarddata:
+            rows = 0
             try:
                 rows = getTotalrow(start_date, end_date, 20, 1, data['customerID'])
                 print(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
                 logging.info(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
             except Exception as e:
-                sendmail('rohit45deepak@gmail.com', rows, data['collectionName'], 'no data found')
+                sendmail('rohit45deepak@gmail.com', 'no new data', data['collectionName'], 'no data found')
+                logging.error(f"no data found")
+                continue
+            ExtractData(data['collectionName'], data['customerID'], data['investor_uuid'],start_date, end_date, rows)
+            
+        index += 1
+    else:
+        start_date = str(end_date)
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        print('date next date', end_date, start_date)
+        logging.info(f"date next date {end_date} {start_date}")
+        for data in dashboarddata:
+            rows = 0
+            try:
+                rows = getTtaolrow(start_date, end_date, 20, 1, data['customerID'])
+                print(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
+                logging.info(f"Total rows {rows} , {start_date}, {end_date} {data['customerID']} {data['collectionName']}")
+            except Exception as e:
+                sendmail('rohit45deepak@gmail.com', 'no new data', data['collectionName'], 'no data found')
                 logging.error(f"no data found")
                 continue
             try:
                 ExtractData(data['collectionName'], data['customerID'], data['inverstor_uuid'],start_date, end_date, rows)
             except Exception as e:
-                sendmail('rohit45deepak@gmail.com', rows, data['collectionName'], e)
+                sendmail('rohit45deepak@gmail.com', 'no new data', data['collectionName'], e)
                 logging.error(f"Error: {e}")
 
     sleep_until_next_day()
-    
     
